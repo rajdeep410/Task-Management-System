@@ -1,7 +1,9 @@
 import axios from "axios";
 import io from "socket.io-client";
 
-const API_BASE_URL = "http://localhost:5000/api";
+// Use environment variable for API URL, fallback to localhost for development
+const BACKEND_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = `${BACKEND_URL}/api`;
 
 // API instance
 export const apiClient = axios.create({
@@ -12,7 +14,7 @@ export const apiClient = axios.create({
 });
 
 // Socket.io instance
-export const socket = io("http://localhost:5000", {
+export const socket = io(BACKEND_URL, {
   reconnection: true,
   reconnectionDelay: 1000,
   reconnectionDelayMax: 5000,

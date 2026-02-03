@@ -7,9 +7,18 @@ require("dotenv").config();
 
 const app = express();
 const httpServer = createServer(app);
+
+// Get frontend URL from environment variable, with fallback to localhost
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:5177", "http://localhost:5174"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5177",
+      "http://localhost:5174",
+      FRONTEND_URL, // Production frontend URL
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   },
 });
